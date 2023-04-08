@@ -2,7 +2,6 @@ package exception
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
@@ -13,12 +12,11 @@ import (
 // Handler that will process panic.
 // This will be called in router.PanicHandler.
 func PanicHandler(writer http.ResponseWriter, request *http.Request, err interface{}) {
-	fmt.Println("=== Masuk panic handler ===")
-	if notFoundError(writer, request, err) {
+	if validationError(writer, request, err) {
 		return
 	}
 
-	if validationError(writer, request, err) {
+	if notFoundError(writer, request, err) {
 		return
 	}
 
@@ -49,7 +47,6 @@ func validationError(writer http.ResponseWriter, request *http.Request, err inte
 }
 
 func notFoundError(writer http.ResponseWriter, request *http.Request, err interface{}) bool {
-	fmt.Println("Masuk error handler")
 	exception, ok := err.(NotFoundError)
 
 	if !ok {
