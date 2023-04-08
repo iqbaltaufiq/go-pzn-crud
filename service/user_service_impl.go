@@ -5,6 +5,7 @@ import (
 	"database/sql"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/iqbaltaufiq/latihan-restapi/exception"
 	"github.com/iqbaltaufiq/latihan-restapi/helper"
 	"github.com/iqbaltaufiq/latihan-restapi/model/domain"
 	"github.com/iqbaltaufiq/latihan-restapi/model/web"
@@ -66,7 +67,9 @@ func (s *UserServiceImpl) Update(ctx context.Context, request web.UserUpdatePayl
 
 	// find the user in DB
 	userInDB, err := s.UserRepository.FindById(ctx, tx, request.Id)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	userInDB.Name = request.Name
 
@@ -84,7 +87,9 @@ func (s *UserServiceImpl) Delete(ctx context.Context, userId int) {
 	defer helper.CommitOrRollback(tx)
 
 	user, err := s.UserRepository.FindById(ctx, tx, userId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	s.UserRepository.Delete(ctx, tx, user.Id)
 }
@@ -95,7 +100,9 @@ func (s *UserServiceImpl) FindById(ctx context.Context, userId int) web.UserResp
 	defer helper.CommitOrRollback(tx)
 
 	user, err := s.UserRepository.FindById(ctx, tx, userId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	return web.UserResponse{
 		Id:         user.Id,

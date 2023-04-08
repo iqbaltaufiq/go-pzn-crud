@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/iqbaltaufiq/latihan-restapi/controller"
+	"github.com/iqbaltaufiq/latihan-restapi/exception"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -15,5 +16,6 @@ func NewRouter(controller controller.UserController) *httprouter.Router {
 	router.PUT("/api/categories/:userId", controller.Update)
 	router.DELETE("/api/categories/:userId", controller.Delete)
 
+	router.PanicHandler = exception.PanicHandler
 	return router
 }
