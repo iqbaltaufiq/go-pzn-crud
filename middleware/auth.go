@@ -26,7 +26,7 @@ func (m *AuthMiddleware) ServeHTTP(writer http.ResponseWriter, request *http.Req
 		writer.Header().Add("Content-Type", "application/json")
 		writer.WriteHeader(http.StatusUnauthorized)
 		response := web.HttpResponse{
-			Code:   301,
+			Code:   401,
 			Status: "Unauthorized",
 		}
 

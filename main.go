@@ -1,3 +1,10 @@
+// @author Iqbal Taufiqurrahman
+// created in April 2023
+// This is a repository created after completing
+// Programmer Zaman Now's Golang RESTful API course
+// in Codepolitan.
+// This repository is for educational purposes and free of use.
+
 package main
 
 import (
